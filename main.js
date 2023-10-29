@@ -1,6 +1,10 @@
 import "./src/style.css";
 import "./src/views/template";
-import * as Header from "./src/components/Header";
+import Header from "./src/components/Header";
+import Footer from "./src/components/Footer";
+import MusicPlayer from "./src/components/MusicPlayer";
 
 
-Header.default.render();
+Header.render();
+MusicPlayer.render();
+Footer.render();
