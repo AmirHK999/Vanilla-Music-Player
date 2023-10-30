@@ -7,5 +7,5 @@ import * as model from "./src/model";
 
 
 Header.render(model.state);
-MusicPlayer.render(model.state);
+MusicPlayer.render(model.state.latestMusics);
 Footer.render();

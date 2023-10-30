@@ -2,10 +2,9 @@ class Header {
 
     header = document.querySelector("header");
 
-    render(a) {
+    render() {
         this.generateMarkup();
 
-        console.log(a);
         //sidebar
         let sidebarToggleBtn = document.querySelector("#sidebarToggleBtn");
         let sidebar = document.querySelector("#sidebarBackdrop");

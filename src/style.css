@@ -5,3 +5,7 @@
 body {
     @apply bg-zinc-200 dark:bg-zinc-700 h-screen;
 }
+
+main {
+    @apply h-screen grid grid-cols-1 justify-center items-center;
+}
