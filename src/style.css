@@ -11,7 +11,7 @@ main {
 }
 
 audio::-webkit-media-controls-panel {
-    @apply dark:bg-zinc-800;
+    @apply dark:bg-zinc-950 border dark:border-zinc-950;
 }
 
 
@@ -23,7 +23,7 @@ audio::-webkit-media-controls-time-remaining-display {
 }
 
 audio::-webkit-media-controls-timeline {
-    @apply dark:text-white;
+    @apply dark:bg-zinc-800 rounded-full;
 }
 
 audio::-webkit-media-controls-mute-button {
@@ -31,7 +31,7 @@ audio::-webkit-media-controls-mute-button {
     border-radius: 50%;
 }
 
-audio::-webkit-media-controls-play-button:hover {
+audio::-webkit-media-controls-play-button {
     @apply dark:bg-zinc-600;
     border-radius: 50%;
 }

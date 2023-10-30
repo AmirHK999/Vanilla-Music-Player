@@ -20,7 +20,7 @@ class MusicPlayer {
     generateMarkup() {
         const markup = /*html*/
         `
-        <ul class="musicPlayer mx-auto my-[100px] lg:w-[70%] md:w-[85%] sm:w-[80%] max-sm:w-[82%] grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 max-sm:grid-cols-1 gap-5">
+        <ul class="musicPlayer lg:mt-[80px] md:mt-0 sm:mt-[100px] max-sm:mt-[100px] mx-auto lg:w-[70%] md:w-[85%] sm:w-[80%] max-sm:w-[82%] grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 max-sm:grid-cols-1 gap-5">
           
           <li class="player grid items-center text-center p-5 rounded-lg aspect-square border border-zinc-300 shadow-lg dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950">
             <img src="${this.music?.poster}" class="mx-auto w-[80%] aspect-square rounded-full">
@@ -32,9 +32,6 @@ class MusicPlayer {
               </button>
 
               <div class="col-span-2">
-               <audio controls class="audioPlayer mx-auto w-[180px] h-[50px] rounded-full border border-zinc-600 dark:text-zinc-600 dark:border-zinc-800">
-                <source src="${this.music?.link}" type="audio/mpeg">
-               </audio>
               </div>
   
 
@@ -44,7 +41,7 @@ class MusicPlayer {
             </div>
           </li>
 
-          <li class="list overflow-y-scroll text-center p-3 aspect-square border border-zinc-300 shadow-lg dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950">
+          <li class="list mb-[100px] overflow-y-scroll text-center p-3 aspect-square border border-zinc-300 shadow-lg dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950">
             <ul class="mx-auto grid grid-cols-1 justify-center items-center border border-zinc-300 shadow-lg dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950">
               ${ 
                 this.latsetMusics?.map((music) => {
