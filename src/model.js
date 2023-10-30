@@ -12,9 +12,9 @@ export const state = {
 try {
     await fetch(uri + "musics")
     .then(res => res.json())
-    .then(data => state.musics = data)
+    .then(data => state.musics = data.reverse())
     .then(() => {
-        state.latestMusics = state.musics.reverse().slice(state.musics.length - 6, state.musics.length);
+        state.latestMusics = state.musics.slice(state.musics.length - 6, state.musics.length);
     })
 } catch(err) {
     alert(err.message);

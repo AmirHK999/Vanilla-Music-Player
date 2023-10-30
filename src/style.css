@@ -9,3 +9,29 @@ body {
 main {
     @apply h-screen grid grid-cols-1 justify-center items-center;
 }
+
+audio::-webkit-media-controls-panel {
+    @apply dark:bg-zinc-800;
+}
+
+
+audio::-webkit-media-controls-current-time-display {
+    @apply dark:text-white;
+}
+audio::-webkit-media-controls-time-remaining-display {
+    @apply dark:text-white;
+}
+
+audio::-webkit-media-controls-timeline {
+    @apply dark:text-white;
+}
+
+audio::-webkit-media-controls-mute-button {
+    @apply dark:bg-zinc-600;
+    border-radius: 50%;
+}
+
+audio::-webkit-media-controls-play-button:hover {
+    @apply dark:bg-zinc-600;
+    border-radius: 50%;
+}
