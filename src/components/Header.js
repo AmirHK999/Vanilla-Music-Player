@@ -62,8 +62,8 @@ class Header {
           </div>
 
           <div class="col-span-2 flex grid-cols-2 mx-auto">
-            <input placeholder="Search for a music" class="rounded-lg p-1 w-[100%] border border-zinc-400 dark:bg-zinc-700 dark:text-white dark:border-zinc-500" />
-            <button class="ml-2">
+            <input id="searchInput" placeholder="Search for a music" class="rounded-lg p-1 w-[100%] border border-zinc-400 dark:bg-zinc-700 dark:text-white dark:border-zinc-500" />
+            <button id="searchBtn" class="ml-2">
               <i class="fa fa-search"></i>
             </button>
           </div>

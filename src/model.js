@@ -42,6 +42,7 @@ class Actions {
             alert(err.message);
         }
     }
+    
 }
 
 export const Action = new Actions();

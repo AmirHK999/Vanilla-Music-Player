@@ -1,26 +1,22 @@
-import { state } from "../model";
-
 class MusicPlayer {
-    latsetMusics;
+    musics;
     music;
-    getMusic;
     main = document.querySelector("main");
 
-    render(latsetMusics, getMusic, music) {
+    render(musics, music) {
         this.main.innerHTML = "";
-        this.latsetMusics = latsetMusics;
+        this.musics = musics;
         this.music = music;
-        this.getMusic = getMusic;
 
         this.generateMarkup();
-        console.log(this.latsetMusics);
+        console.log(this.musics);
         console.log(music);
     }
 
     generateMarkup() {
         const markup = /*html*/
         `
-        <ul class="musicPlayer lg:mt-[80px] md:mt-0 sm:mt-[100px] max-sm:mt-[100px] mx-auto lg:w-[70%] md:w-[85%] sm:w-[80%] max-sm:w-[82%] grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 max-sm:grid-cols-1 gap-5">
+        <ul class="musicPlayer lg:mt-[80px] md:mt-0 sm:mt-[100px] max-sm:mt-[100px] mx-auto lg:w-[60%] md:w-[85%] sm:w-[80%] max-sm:w-[82%] grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 max-sm:grid-cols-1 gap-5">
           
           <li class="player grid items-center text-center p-5 rounded-lg aspect-square border border-zinc-300 shadow-lg dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950">
             <img src="${this.music?.poster}" class="mx-auto w-[80%] aspect-square rounded-full">
@@ -44,10 +40,10 @@ class MusicPlayer {
           <li class="list mb-[100px] overflow-y-scroll text-center p-3 aspect-square border border-zinc-300 shadow-lg dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950">
             <ul class="mx-auto grid grid-cols-1 justify-center items-center border border-zinc-300 shadow-lg dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950">
               ${ 
-                this.latsetMusics?.map((music) => {
+                this.musics?.map((music) => {
                     return(/*html*/
                     `
-                      <li id="${music.id}" class="musicItem cursor-pointer p-2 grid grid-cols-3 border-b border-zinc-300 dark:border-zinc-800">
+                      <li id="${music.id}" class="musicItem cursor-pointer p-2 grid grid-cols-3 border-b border-zinc-300 dark:border-zinc-800 ${ music?.id == parseInt(window.location.hash.slice(1)) ? 'bg-zinc-200 dark:bg-zinc-800' : null }">
                         <div class="col-span-2 grid grid-cols-2 justify-start items-center">
                           <img src="${music.poster}" class="w-[70%] aspect-square">
                           <div>
