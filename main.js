@@ -6,7 +6,7 @@ import MusicPlayer from "./src/components/MusicPlayer";
 import * as model from "./src/model";
 
 
-if("loggedInUser" in localStorage) {
+if ("loggedInUser" in localStorage) {
     null;
 } else {
     localStorage.setItem("loggedInUser", Math.floor(Math.random() * 10000000000));
@@ -18,6 +18,7 @@ if (!window.location.hash || parseInt(window.location.hash.slice(1)) > model.sta
 }
 
 
+let loggedInUser = localStorage.getItem("loggedInUser");
 let id = parseInt(window.location.hash.slice(1));
 
 model.Action.getMusic(id)
@@ -28,7 +29,7 @@ model.Action.getMusic(id)
         document.querySelector(".audioPlayer").addEventListener("ended", () => {
             window.location.hash = parseInt(window.location.hash.slice(1)) + 1;
 
-            if(parseInt(window.location.hash.slice(1)) == model.state.musics.length + 1) {
+            if (parseInt(window.location.hash.slice(1)) == model.state.musics.length + 1) {
                 window.location.hash = 1;
             }
         })
@@ -52,8 +53,8 @@ const getMusic = () => {
 
             document.querySelector(".audioPlayer").addEventListener("ended", () => {
                 window.location.hash = parseInt(window.location.hash.slice(1)) + 1;
-    
-                if(parseInt(window.location.hash.slice(1)) == model.state.musics.length + 1) {
+
+                if (parseInt(window.location.hash.slice(1)) == model.state.musics.length + 1) {
                     window.location.hash = 1;
                 }
             })
@@ -91,6 +92,37 @@ const searchMusic = () => {
 
 document.querySelector("#searchBtn").addEventListener("click", searchMusic);
 
+
+export const likeMusic = async () => {
+
+    if (!model.state.music.likedBy.includes(loggedInUser)) {
+
+        model.state.music.likedBy = [
+            ...model.state.music.likedBy,
+            loggedInUser
+        ]
+
+    } else {
+
+        model.state.music.likedBy = model.state.music.likedBy.filter((user) => {
+            if(user != loggedInUser) {
+                return user;
+            }
+        })
+    }
+
+    await model.Action.likeMusic(id, {
+        ...model.state.music,
+        likedBy: model.state.music.likedBy
+    })
+    .then(async () => {
+        await model.Action.getMusics();
+    })
+        .then(() => {
+            MusicPlayer.render(model.state.latestMusics, model.state.music);
+            Footer.render(model.state.music);
+        })
+}
 
 
 

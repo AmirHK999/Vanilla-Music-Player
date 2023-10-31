@@ -1,7 +1,10 @@
+import { likeMusic } from "../../main";
+
 class MusicPlayer {
     musics;
     music;
     main = document.querySelector("main");
+    loggedInUser = localStorage.getItem("loggedInUser");
 
     render(musics, music) {
         this.main.innerHTML = "";
@@ -22,6 +25,14 @@ class MusicPlayer {
             <img src="${this.music?.poster}" class="mx-auto w-[80%] aspect-square rounded-full">
             <p class="mt-3 text-zinc-800 dark:text-zinc-300">${this.music?.title}</p>
             <p class="mb-2 text-zinc-400 dark:text-zinc-600">${this.music?.artist}</p>
+
+            <div class="mx-auto flex grid-cols-1 gap-3 my-1 text-center">
+              <div class="flex gap-2 text-zinc-800 dark:text-zinc-300">
+                <button id="likeBtn"><i class="fa ${ this.music?.likedBy.includes(this.loggedInUser) ? 'fa-heart text-red-500' : 'fa-heart-o' }"></i></button>
+                <p>${ this.music?.likedBy.length }</p>
+              </div>              
+            </div>
+
             <div class="mx-auto p-2 flex grid-cols-4 gap-1">
               <button class="backward col-span-1 w-[50px] aspect-square rounded-full border border-zinc-500 dark:text-zinc-300 dark:border-zinc-800">
                 <i class="fa fa-backward"></i>
@@ -38,12 +49,12 @@ class MusicPlayer {
           </li>
 
           <li class="list mb-[100px] overflow-y-scroll text-center p-3 aspect-square border border-zinc-300 shadow-lg dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950">
-            <ul class="mx-auto grid grid-cols-1 justify-center items-center border border-zinc-300 shadow-lg dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950">
+            <ul class="mx-auto grid grid-cols-1 justify-center items-center border border-zinc-300 shadow-lg dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-950">
               ${ 
                 this.musics?.map((music) => {
                     return(/*html*/
                     `
-                      <li id="${music.id}" class="musicItem cursor-pointer p-2 grid grid-cols-3 border-b border-zinc-300 dark:border-zinc-800 ${ music?.id == parseInt(window.location.hash.slice(1)) ? 'bg-zinc-200 dark:bg-zinc-800' : null }">
+                      <li id="${music.id}" class="musicItem cursor-pointer p-2 grid grid-cols-3 border-b border-zinc-300 dark:border-zinc-700 ${ music?.id == parseInt(window.location.hash.slice(1)) ? 'bg-zinc-200 dark:bg-zinc-800' : 'hover:bg-zinc-200 hover:dark:bg-zinc-800' }">
                         <div class="col-span-2 grid grid-cols-2 justify-start items-center">
                           <img src="${music.poster}" class="w-[70%] aspect-square">
                           <div>
@@ -52,8 +63,11 @@ class MusicPlayer {
                           </div>
                         </div>
 
-                        <div class="col-span-1">
-                          
+                        <div class="col-span-1 flex grid-cols-1 justify-end items-center mr-3">
+                          <div class="flex gap-2 text-zinc-800 dark:text-zinc-300">
+                            <button><i class="fa fa-heart"></i></button>
+                            <p>${ music?.likedBy.length }</p>
+                          </div>    
                         </div>
                       </li>
                     `
@@ -84,6 +98,8 @@ class MusicPlayer {
         document.querySelector(".forward").addEventListener("click", () => {
             window.location.hash = parseInt(window.location.hash.slice(1)) + 1;
         })
+
+        document.querySelector("#likeBtn").addEventListener("click", likeMusic);
     }
 }
 
