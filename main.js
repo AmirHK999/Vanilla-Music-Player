@@ -21,6 +21,8 @@ if (!window.location.hash || parseInt(window.location.hash.slice(1)) > model.sta
 let loggedInUser = localStorage.getItem("loggedInUser");
 let id = parseInt(window.location.hash.slice(1));
 
+//initial fetching
+
 model.Action.getMusic(id)
     .then(() => {
         MusicPlayer.render(model.state.latestMusics, model.state.music);
@@ -36,6 +38,9 @@ model.Action.getMusic(id)
     })
 
 
+
+//fetch selected music
+
 const getMusic = () => {
 
     if (!window.location.hash || parseInt(window.location.hash.slice(1)) > model.state.musics.length || parseInt(window.location.hash.slice(1)) < 1) {
@@ -46,6 +51,7 @@ const getMusic = () => {
 
     model.Action.getMusic(id)
         .then(() => {
+            Header.render(model.state.musics);
             MusicPlayer.render(model.state.latestMusics, model.state.music);
             Footer.render(model.state.music);
 
@@ -64,8 +70,11 @@ const getMusic = () => {
 
 
 
-Header.render(model.state);
+//rendering header
+Header.render(model.state.musics);
 
+
+//search system
 let searchInput = "";
 
 document.querySelector("#searchInput").addEventListener("change", (event) => {
@@ -91,8 +100,78 @@ const searchMusic = () => {
 }
 
 document.querySelector("#searchBtn").addEventListener("click", searchMusic);
+document.querySelector("#searchInput").addEventListener("keyup", (event) => {
+    if(event.key == "Enter") {
+        searchMusic();
+    }
+})
 
 
+
+
+//admin system
+let titleInput = "";
+let linkInput = "";
+let artistInput = "";
+let posterInput = "";
+let descrInput = "";
+
+document.querySelector("#titleInput").addEventListener("change", (event) => {
+    titleInput = event.target.value;
+})
+
+document.querySelector("#linkInput").addEventListener("change", (event) => {
+    linkInput = event.target.value;
+})
+
+document.querySelector("#artistInput").addEventListener("change", (event) => {
+    artistInput = event.target.value;
+})
+
+document.querySelector("#posterInput").addEventListener("change", (event) => {
+    posterInput = event.target.value;
+})
+
+document.querySelector("#descrInput").addEventListener("change", (event) => {
+    descrInput = event.target.value;
+})
+
+export const addMusic = async () => {
+    if(titleInput != "" && posterInput != "" && linkInput != "" && artistInput != "") {
+        model.Action.addMusic({
+            id: `${ Math.floor(Math.random() * 10000000000) }`,
+            title: titleInput,
+            link: linkInput,
+            poster: posterInput,
+            artist: artistInput,
+            description: descrInput,
+            tags: [],
+            likedBy: []
+        })
+        .then(async () => {
+            await model.Action.getMusics();
+        })
+        .then(() => {
+            Header.render(model.state.musics);
+            MusicPlayer.render(model.state.latestMusics, model.state.music);
+        })
+    }
+}
+
+export const deleteMusic = async (id) => {
+        model.Action.deleteMusic(id)
+        .then(async () => {
+            await model.Action.getMusics();
+        })
+        .then(() => {
+            Header.render(model.state.musics);
+            MusicPlayer.render(model.state.latestMusics, model.state.music);
+        })
+}
+
+
+
+//like system
 export const likeMusic = async () => {
 
     if (!model.state.music.likedBy.includes(loggedInUser)) {
@@ -123,7 +202,6 @@ export const likeMusic = async () => {
             Footer.render(model.state.music);
         })
 }
-
 
 
 window.addEventListener("load", getMusic);

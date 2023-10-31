@@ -1,4 +1,4 @@
-import { likeMusic } from "../../main";
+import { addMusic, deleteMusic, likeMusic } from "../../main";
 
 class MusicPlayer {
     musics;
@@ -83,6 +83,7 @@ class MusicPlayer {
         this.main.innerHTML = "";
         this.main.insertAdjacentHTML("afterbegin", markup);
 
+
         document.querySelectorAll(".musicItem").forEach((item) => {
             item.addEventListener("click", () => {
                 window.location.hash = item.id;
@@ -99,7 +100,10 @@ class MusicPlayer {
             window.location.hash = parseInt(window.location.hash.slice(1)) + 1;
         })
 
+
         document.querySelector("#likeBtn").addEventListener("click", likeMusic);
+        document.querySelector("#addMusicBtn").addEventListener("click", addMusic);
+        document.querySelectorAll(".deleteMusicBtn").forEach((el) => el.addEventListener("click", () => deleteMusic(el.id)))
     }
 }
 

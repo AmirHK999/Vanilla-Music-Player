@@ -1,14 +1,18 @@
 class Header {
 
     header = document.querySelector("header");
+    musics;
 
-    render() {
+    render(musics) {
+        this.header.innerHTML = "";
+        this.musics = musics;
         this.generateMarkup();
 
         //sidebar
         let sidebarToggleBtn = document.querySelector("#sidebarToggleBtn");
         let sidebar = document.querySelector("#sidebarBackdrop");
-
+        let adminToggleBtn = document.querySelector("#adminToggleBtn");
+        let admin = document.querySelector("#adminBackdrop");
 
         const toggleSidebar = () => {
             if(sidebar.classList.contains("hidden")) {
@@ -18,10 +22,23 @@ class Header {
             }
         }
 
+        const toggleAdmin = () => {
+            if(admin.classList.contains("hidden")) {
+                admin.classList.remove("hidden");
+            } else {
+                admin.classList.add("hidden");
+            }
+        }
+
         document.querySelector(".sidebar").addEventListener("click", (event) => event.stopPropagation());
 
         sidebarToggleBtn.addEventListener("click", toggleSidebar);
         sidebar.addEventListener("click", toggleSidebar);
+
+        document.querySelector(".admin").addEventListener("click", (event) => event.stopPropagation());
+
+        adminToggleBtn.addEventListener("click", toggleAdmin);
+        admin.addEventListener("click", toggleAdmin);
 
 
         //theme
@@ -85,15 +102,59 @@ class Header {
               </a>
             </div>
             <ul class="mx-auto w-[90%] mt-5 text-center">
-              <li class="mt-5 p-3 cursor-pointer bg-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-600 duration-300 dark:bg-zinc-700 dark:text-zinc-400 rounded-lg">Add Songs<li>
+              <li id="adminToggleBtn" class="mt-5 p-3 cursor-pointer bg-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-600 duration-300 dark:bg-zinc-700 dark:text-zinc-400 rounded-lg">Add Songs<li>
             </ul>
           </div>
         </div>
+
+
+        <div id="adminBackdrop" class="backdrop fixed top-0 left-0 z-40 w-full h-screen backdrop-blur-sm grid justify-center items-center hidden">
+        <div class="admin w-[300px] aspect-square rounded-md mx-auto text-center bg-zinc-400 text-zinc-600 border border-zinc-200 dark:text-zinc-400 dark:bg-zinc-800 dark:border-zinc-700">
+          <div class="pt-5">
+
+          </div>
+          <ul class="mx-auto w-[90%] mt-5 text-center grid gap-5">
+            <li><input id="titleInput" placeholder="Title" class="rounded-lg p-1 w-[100%] border border-zinc-400 dark:bg-zinc-700 dark:text-white dark:border-zinc-500" /></li>
+            <li><input id="linkInput" placeholder="Link" class="rounded-lg p-1 w-[100%] border border-zinc-400 dark:bg-zinc-700 dark:text-white dark:border-zinc-500" /></li>
+            <li><input id="artistInput" placeholder="Artist" class="rounded-lg p-1 w-[100%] border border-zinc-400 dark:bg-zinc-700 dark:text-white dark:border-zinc-500" /></li>
+            <li><input id="posterInput" placeholder="Poster" class="rounded-lg p-1 w-[100%] border border-zinc-400 dark:bg-zinc-700 dark:text-white dark:border-zinc-500" /></li>
+            <li><input id="descrInput" placeholder="Description" class="rounded-lg p-1 w-[100%] border border-zinc-400 dark:bg-zinc-700 dark:text-white dark:border-zinc-500" /></li>
+            <li id="addMusicBtn" class="p-3 cursor-pointer bg-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-600 duration-300 dark:bg-zinc-700 dark:text-zinc-400 rounded-lg">Add Song<li>
+          </ul>
+
+          <div class="adminList overflow-y-scroll text-center p-3 aspect-square border border-zinc-300 shadow-lg dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950">
+            <ul class="mx-auto grid grid-cols-1 justify-center items-center border border-zinc-300 shadow-lg dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-950">
+              ${ 
+                this.musics?.map((music) => {
+                    return(/*html*/
+                    `
+                      <li class="adminMusicItem cursor-pointer p-2 grid grid-cols-3 border-b border-zinc-300 dark:border-zinc-700 ${ music?.id == parseInt(window.location.hash.slice(1)) ? 'bg-zinc-200 dark:bg-zinc-800' : 'hover:bg-zinc-200 hover:dark:bg-zinc-800' }">
+                        <div class="col-span-2 grid grid-cols-2 justify-start items-center">
+                          <img src="${music.poster}" class="w-[70%] aspect-square">
+                          <div>
+                            <p class="text-sm text-zinc-800 dark:text-zinc-300">${music.title}</p>
+                            <p class="text-sm text-zinc-400 dark:text-zinc-600">${music.artist}</p>
+                          </div>
+                        </div>
+
+                        <div class="col-span-1 flex grid-cols-1 justify-end items-center mr-3">
+                          <div class="flex gap-2 text-zinc-800 dark:text-zinc-300">
+                            <button id="${music.id}" class="deleteMusicBtn"><i class="fa fa-trash"></i></button>
+                          </div>    
+                        </div>
+                      </li>
+                    `
+                    )
+                }).join("")
+              }
+            </ul>
+          </div>
+        </div>
+      </div>
         `
 
         this.header.innerHTML = "";
         this.header.insertAdjacentHTML("afterbegin", markup);
-
     }
 }
 

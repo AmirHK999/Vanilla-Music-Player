@@ -12,9 +12,10 @@ export const state = {
 try {
     await fetch(uri + "musics")
     .then(res => res.json())
-    .then(data => state.musics = data.reverse())
+    .then(data => state.musics = data)
+    .then(() => state.musics = state.musics)
     .then(() => {
-        state.latestMusics = state.musics.slice(state.musics.length - 6, state.musics.length);
+        state.latestMusics = state.musics.slice(state.musics.length - 6, state.musics.length).reverse();
     })
 } catch(err) {
     alert(err.message);
@@ -27,9 +28,9 @@ class Actions {
         try {
             await fetch(uri + "musics")
             .then(res => res.json())
-            .then(data => state.musics = data.reverse())
+            .then(data => state.musics = data)
             .then(() => {
-                state.latestMusics = state.musics.slice(state.musics.length - 6, state.musics.length);
+                state.latestMusics = state.musics.slice(state.musics.length - 6, state.musics.length).reverse();
             })
         } catch(err) {
             alert(err.message);
@@ -59,6 +60,46 @@ class Actions {
                 redirect: "follow",
                 referrerPolicy: "no-referrer", 
                 body: JSON.stringify(data),
+              });
+
+        } catch(err) {
+            console.log(err.message);
+        }
+    }
+
+    async addMusic(data) {
+        try {
+            await fetch(uri + "musics", {
+                method: "POST", 
+                mode: "cors", 
+                cache: "no-cache", 
+                credentials: "same-origin", 
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                redirect: "follow",
+                referrerPolicy: "no-referrer", 
+                body: JSON.stringify(data),
+              });
+
+        } catch(err) {
+            console.log(err.message);
+        }
+    }
+
+    async deleteMusic(id) {
+        try {
+            await fetch(uri + "musics/" + id, {
+                method: "DELETE", 
+                mode: "cors", 
+                cache: "no-cache", 
+                credentials: "same-origin", 
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                redirect: "follow",
+                referrerPolicy: "no-referrer", 
+                body: "",
               });
 
         } catch(err) {
