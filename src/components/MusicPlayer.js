@@ -1,4 +1,4 @@
-import { addMusic, deleteMusic, likeMusic } from "../../main";
+import { addMusic, deleteMusic, likeMusic, searchMusic } from "../../main";
 
 class MusicPlayer {
     musics;
@@ -16,7 +16,7 @@ class MusicPlayer {
 
     generateMarkup() {
         const markup = /*html*/
-        `
+            `
         <ul class="musicPlayer lg:mt-[80px] md:mt-0 sm:mt-[100px] max-sm:mt-[100px] mx-auto lg:w-[60%] md:w-[85%] sm:w-[80%] max-sm:w-[82%] grid lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 max-sm:grid-cols-1 gap-5">
           
           <li class="player grid items-center text-center p-5 rounded-lg aspect-square border border-zinc-300 shadow-lg dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950">
@@ -26,8 +26,8 @@ class MusicPlayer {
 
             <div class="mx-auto flex grid-cols-1 gap-3 my-1 text-center">
               <div class="flex gap-2 text-zinc-800 dark:text-zinc-300">
-                <button id="likeBtn"><i class="fa ${ this.music?.likedBy.includes(this.loggedInUser) ? 'fa-heart text-red-500' : 'fa-heart-o' }"></i></button>
-                <p>${ this.music?.likedBy.length }</p>
+                <button id="likeBtn"><i class="fa ${this.music?.likedBy.includes(this.loggedInUser) ? 'fa-heart text-red-500' : 'fa-heart-o'}"></i></button>
+                <p>${this.music?.likedBy.length}</p>
               </div>              
             </div>
 
@@ -48,11 +48,10 @@ class MusicPlayer {
 
           <li class="list mb-[100px] overflow-y-scroll text-center p-3 aspect-square border border-zinc-300 shadow-lg dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950">
             <ul class="mx-auto grid grid-cols-1 justify-center items-center border border-zinc-300 shadow-lg dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-950">
-              ${ 
-                this.musics?.map((music) => {
-                    return(/*html*/
+              ${this.musics?.map((music) => {
+                return (/*html*/
                     `
-                      <li id="${music.id}" class="musicItem cursor-pointer p-2 grid grid-cols-3 border-b border-zinc-300 dark:border-zinc-700 ${ music?.id == parseInt(window.location.hash.slice(1)) ? 'bg-zinc-200 dark:bg-zinc-800' : 'hover:bg-zinc-200 hover:dark:bg-zinc-800' }">
+                      <li id="${music.id}" class="musicItem cursor-pointer p-2 grid grid-cols-3 border-b border-zinc-300 dark:border-zinc-700 ${music?.id == parseInt(window.location.hash.slice(1)) ? 'bg-zinc-200 dark:bg-zinc-800' : 'hover:bg-zinc-200 hover:dark:bg-zinc-800'}">
                         <div class="col-span-2 grid grid-cols-2 justify-start items-center">
                           <img src="${music.poster}" class="w-[70%] aspect-square">
                           <div>
@@ -64,14 +63,14 @@ class MusicPlayer {
                         <div class="col-span-1 flex grid-cols-1 justify-end items-center mr-3">
                           <div class="flex gap-2 text-zinc-800 dark:text-zinc-300">
                             <button><i class="fa fa-heart"></i></button>
-                            <p>${ music?.likedBy.length }</p>
+                            <p>${music?.likedBy.length}</p>
                           </div>    
                         </div>
                       </li>
                     `
-                    )
-                }).join("")
-              }
+                )
+            }).join("")
+            }
             </ul>
           </li>
 
@@ -89,7 +88,7 @@ class MusicPlayer {
         })
 
         document.querySelector(".backward").addEventListener("click", () => {
-            if(parseInt(window.location.hash.slice(1)) > 1) {
+            if (parseInt(window.location.hash.slice(1)) > 1) {
                 window.location.hash = parseInt(window.location.hash.slice(1)) - 1;
             }
         })
@@ -101,7 +100,15 @@ class MusicPlayer {
 
         document.querySelector("#likeBtn").addEventListener("click", likeMusic);
         document.querySelector("#addMusicBtn").addEventListener("click", addMusic);
-        document.querySelectorAll(".deleteMusicBtn").forEach((el) => el.addEventListener("click", () => deleteMusic(el.id)))
+        document.querySelectorAll(".deleteMusicBtn").forEach((el) => el.addEventListener("click", () => deleteMusic(el.id)));
+
+
+        document.querySelector("#searchBtn").addEventListener("click", searchMusic);
+        document.querySelector("#searchInput").addEventListener("keyup", (event) => {
+            if (event.key == "Enter") {
+                searchMusic();
+            }
+        })
     }
 }
 

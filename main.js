@@ -85,9 +85,18 @@ document.querySelector("#searchInput").addEventListener("change", (event) => {
     }
 })
 
-const searchMusic = () => {
+export const searchMusic = () => {
     if (searchInput == "") {
         MusicPlayer.render(model.state.musics, model.state.music);
+
+        document.querySelector("#searchInput").addEventListener("change", (event) => {
+            searchInput = event.target.value;
+        
+            if (event.target.value == "") {
+                MusicPlayer.render(model.state.musics, model.state.music);
+            }
+        })
+        
     } else {
         model.state.foundMusics = model.state.musics.filter((music) => {
             if (music?.title.includes(searchInput) || music?.title.toUpperCase().includes(searchInput) || music?.title.toLowerCase().includes(searchInput)     ||  music?.artist.includes(searchInput) || music?.artist.toUpperCase().includes(searchInput) || music?.artist.toLowerCase().includes(searchInput)  ||  music?.description.includes(searchInput) || music?.description.toUpperCase().includes(searchInput) || music?.description.toLowerCase().includes(searchInput)) {
@@ -96,17 +105,16 @@ const searchMusic = () => {
         })
 
         MusicPlayer.render(model.state.foundMusics, model.state.music);
+
+        document.querySelector("#searchInput").addEventListener("change", (event) => {
+            searchInput = event.target.value;
+        
+            if (event.target.value == "") {
+                MusicPlayer.render(model.state.musics, model.state.music);
+            }
+        })
     }
 }
-
-document.querySelector("#searchBtn").addEventListener("click", searchMusic);
-document.querySelector("#searchInput").addEventListener("keyup", (event) => {
-    if(event.key == "Enter") {
-        searchMusic();
-    }
-})
-
-
 
 
 //admin system
