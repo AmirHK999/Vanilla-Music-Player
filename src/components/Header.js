@@ -103,6 +103,7 @@ class Header {
             </div>
             <ul class="mx-auto w-[90%] mt-5 text-center">
               <li id="adminToggleBtn" class="mt-5 p-3 cursor-pointer bg-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-600 duration-300 dark:bg-zinc-700 dark:text-zinc-400 rounded-lg">Add Songs<li>
+              <li class="mt-5 p-3 cursor-pointer bg-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-600 duration-300 dark:bg-zinc-700 dark:text-zinc-400 rounded-lg"><a href="https://amirhk888.iran.liara.run/about">Contact With Me</a><li>
             </ul>
           </div>
         </div>

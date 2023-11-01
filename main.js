@@ -90,7 +90,7 @@ const searchMusic = () => {
         MusicPlayer.render(model.state.musics, model.state.music);
     } else {
         model.state.foundMusics = model.state.musics.filter((music) => {
-            if (music?.title.includes(searchInput) || music?.title.toUpperCase().includes(searchInput) || music?.title.toLowerCase().includes(searchInput)) {
+            if (music?.title.includes(searchInput) || music?.title.toUpperCase().includes(searchInput) || music?.title.toLowerCase().includes(searchInput)     ||  music?.artist.includes(searchInput) || music?.artist.toUpperCase().includes(searchInput) || music?.artist.toLowerCase().includes(searchInput)  ||  music?.description.includes(searchInput) || music?.description.toUpperCase().includes(searchInput) || music?.description.toLowerCase().includes(searchInput)) {
                 return music;
             }
         })
@@ -152,8 +152,43 @@ export const addMusic = async () => {
             await model.Action.getMusics();
         })
         .then(() => {
+
+            document.querySelector("#titleInput").value = "";
+            document.querySelector("#linkInput").value = "";
+            document.querySelector("#posterInput").value = "";
+            document.querySelector("#artistInput").value = "";
+            document.querySelector("#descrInput").value = "";
+
+            titleInput = "";
+            linkInput = "";
+            posterInput = "";
+            artistInput = "";
+            descrInput = "";
+        })
+        .then(() => {
             Header.render(model.state.musics);
             MusicPlayer.render(model.state.musics, model.state.music);
+        })
+        .then(() => {
+            document.querySelector("#titleInput").addEventListener("change", (event) => {
+                titleInput = event.target.value;
+            })
+            
+            document.querySelector("#linkInput").addEventListener("change", (event) => {
+                linkInput = event.target.value;
+            })
+            
+            document.querySelector("#artistInput").addEventListener("change", (event) => {
+                artistInput = event.target.value;
+            })
+            
+            document.querySelector("#posterInput").addEventListener("change", (event) => {
+                posterInput = event.target.value;
+            })
+            
+            document.querySelector("#descrInput").addEventListener("change", (event) => {
+                descrInput = event.target.value;
+            })
         })
     }
 }
@@ -166,6 +201,27 @@ export const deleteMusic = async (id) => {
         .then(() => {
             Header.render(model.state.musics);
             MusicPlayer.render(model.state.musics, model.state.music);
+        })
+        .then(() => {
+            document.querySelector("#titleInput").addEventListener("change", (event) => {
+                titleInput = event.target.value;
+            })
+            
+            document.querySelector("#linkInput").addEventListener("change", (event) => {
+                linkInput = event.target.value;
+            })
+            
+            document.querySelector("#artistInput").addEventListener("change", (event) => {
+                artistInput = event.target.value;
+            })
+            
+            document.querySelector("#posterInput").addEventListener("change", (event) => {
+                posterInput = event.target.value;
+            })
+            
+            document.querySelector("#descrInput").addEventListener("change", (event) => {
+                descrInput = event.target.value;
+            })
         })
 }
 
