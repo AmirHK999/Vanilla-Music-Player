@@ -12,8 +12,6 @@ class MusicPlayer {
         this.music = music;
 
         this.generateMarkup();
-        console.log(this.musics);
-        console.log(music);
     }
 
     generateMarkup() {

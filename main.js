@@ -25,7 +25,7 @@ let id = parseInt(window.location.hash.slice(1));
 
 model.Action.getMusic(id)
     .then(() => {
-        MusicPlayer.render(model.state.latestMusics, model.state.music);
+        MusicPlayer.render(model.state.musics, model.state.music);
         Footer.render(model.state.music);
 
         document.querySelector(".audioPlayer").addEventListener("ended", () => {
@@ -52,7 +52,7 @@ const getMusic = () => {
     model.Action.getMusic(id)
         .then(() => {
             Header.render(model.state.musics);
-            MusicPlayer.render(model.state.latestMusics, model.state.music);
+            MusicPlayer.render(model.state.musics, model.state.music);
             Footer.render(model.state.music);
 
             document.querySelector(".audioPlayer").autoplay = true;
@@ -81,13 +81,13 @@ document.querySelector("#searchInput").addEventListener("change", (event) => {
     searchInput = event.target.value;
 
     if (event.target.value == "") {
-        MusicPlayer.render(model.state.latestMusics, model.state.music);
+        MusicPlayer.render(model.state.musics, model.state.music);
     }
 })
 
 const searchMusic = () => {
     if (searchInput == "") {
-        MusicPlayer.render(model.state.latestMusics, model.state.music);
+        MusicPlayer.render(model.state.musics, model.state.music);
     } else {
         model.state.foundMusics = model.state.musics.filter((music) => {
             if (music?.title.includes(searchInput) || music?.title.toUpperCase().includes(searchInput) || music?.title.toLowerCase().includes(searchInput)) {
@@ -153,7 +153,7 @@ export const addMusic = async () => {
         })
         .then(() => {
             Header.render(model.state.musics);
-            MusicPlayer.render(model.state.latestMusics, model.state.music);
+            MusicPlayer.render(model.state.musics, model.state.music);
         })
     }
 }
@@ -165,7 +165,7 @@ export const deleteMusic = async (id) => {
         })
         .then(() => {
             Header.render(model.state.musics);
-            MusicPlayer.render(model.state.latestMusics, model.state.music);
+            MusicPlayer.render(model.state.musics, model.state.music);
         })
 }
 
@@ -198,7 +198,7 @@ export const likeMusic = async () => {
         await model.Action.getMusics();
     })
         .then(() => {
-            MusicPlayer.render(model.state.latestMusics, model.state.music);
+            MusicPlayer.render(model.state.musics, model.state.music);
             Footer.render(model.state.music);
         })
 }
